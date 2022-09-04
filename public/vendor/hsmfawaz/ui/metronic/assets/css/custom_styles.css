@@ -1,0 +1,100 @@
+.custom-image-file {
+    border: #cccbcb dashed 2px;
+    cursor: pointer;
+    padding: 1px;
+    width: 156px;
+    background: #ffff;
+    height: 156px;
+    text-align: center;
+}
+
+.custom-image-file-preview {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.custom-image-file-preview img {
+    width: 150px;
+    height: 150px;
+}
+
+
+.image-file-controller {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
+
+.custom-image-file-preview .btn {
+    position: absolute;
+    top: 55px;
+    left: 60px;
+    color: white;
+}
+:root {
+    --m-c: #172120;
+    --s-c: #e63312;
+}
+
+
+.tw-bg-main {
+    background-color: var(--s-c);
+    color: white;
+}
+
+.tw-bg-secondary {
+    background-color: var(--m-c);
+    color: white;
+}
+
+#app .tw-bg-green-700, #app .tw-text-white {
+    background-color: var(--s-c) !important;
+    border-radius: 10px !important;
+}
+
+.card{
+    position:relative;
+    border: 1px solid #e4e4e4;
+}
+.close{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}
+.data-action{
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+}
+.data-action.text-danger{
+    right: 10px;
+}
+.data-action.text-primary{
+    right: 30px;
+}
+.data-action.text-success{
+    right: 60px;
+}
+.actions{
+    background-color: #f5f5f5;
+    position: absolute;
+    border: 1px solid #CCC;
+    right: 0%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 90px;
+    height: 100%;
+}
+.handle-width{
+    max-width: 92%;
+}
