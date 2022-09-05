@@ -44,7 +44,8 @@
       "App\\": "app/",
       "HsmFawaz\\UI\\": "packages/HsmFawaz/UI",
       "Database\\Factories\\": "database/factories/",
-      "Database\\Seeders\\": "database/seeders/"
+      "Database\\Seeders\\": "database/seeders/",
+      "Codebase\\API\\": "packages/Codebase/API/src"
     }
   },
   "autoload-dev": {

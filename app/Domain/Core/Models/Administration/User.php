@@ -33,6 +33,11 @@ class User extends Authenticatable implements HasMedia
         return $this->getFirstMediaUrl();
     }
 
+    public function information()
+    {
+        return $this->hasOne(UserInformation::class);
+    }
+
     public function getCheckpointAttribute()
     {
         

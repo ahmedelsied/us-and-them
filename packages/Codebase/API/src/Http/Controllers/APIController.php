@@ -1,6 +1,6 @@
 <?php
 
-namespace App\API\Http\Controllers;
+namespace Codebase\API\Http\Controllers;
 
 use Codebase\API\Support\Services\APIResponse\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -29,11 +29,4 @@ class APIController extends BaseController
     {
         return ApiResponse::executed();
     }
-
-    protected function validationAction(): array
-    {
-        return isset($this->formRequest) && class_exists($this->formRequest)
-            ? app($this->formRequest)->validated() : request()->validate($this->rules());
-    }
-
 }
