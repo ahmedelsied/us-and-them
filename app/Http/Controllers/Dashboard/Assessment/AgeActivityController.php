@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Dashboard\Assessment;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Support\Dashboard\Crud\WithDestroy;
-use App\Domain\Core\Enums\CorePermissions;
 use App\Support\Dashboard\Crud\WithStore;
 use App\Support\Dashboard\Crud\WithUpdate;
 use Illuminate\Database\Eloquent\Model;
 use App\Domain\Assessment\Datatables\AgeActivityDatatable;
+use App\Domain\Assessment\Enums\AssessmentPermissions;
 use App\Domain\Assessment\Models\AgeActivity;
 use App\Http\Resources\AgeActivityResource;
 use Batch;
@@ -21,7 +21,7 @@ class AgeActivityController extends DashboardController
     protected string $path = 'dashboard.assessment.age-activities';
     protected string $datatable = AgeActivityDatatable::class;
     protected string $model = AgeActivity::class;
-    protected array $permissions = [CorePermissions::class, 'age_activities'];
+    protected array $permissions = [AssessmentPermissions::class, 'age_activity'];
 
 
     protected function rules()
