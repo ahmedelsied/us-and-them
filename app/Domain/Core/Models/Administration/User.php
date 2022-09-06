@@ -20,7 +20,7 @@ class User extends Authenticatable implements HasMedia
     use HasPassword;
     use InteractsWithMedia;
 
-    protected $fillable = ['name', 'phone', 'password'];
+    protected $fillable = ['name', 'email', 'phone', 'password'];
 
     protected $hidden = ['password', 'remember_token'];
 

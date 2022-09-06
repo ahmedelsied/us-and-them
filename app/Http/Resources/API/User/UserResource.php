@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'is_patient'            =>  $this->information?->is_patient,
             'checkpoint'            =>  $this->information?->checkpoint,
             'token'                 =>  $this->token ?? $request->bearerToken(),
+            'age_activity'          =>  null
         ];
     }
 }
