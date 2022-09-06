@@ -11,7 +11,6 @@ use Illuminate\Support\Str;
 
 class RegisterAction extends APIController
 {
-
     use WithInvoke;
 
     protected function invokeAction(array $validated)
