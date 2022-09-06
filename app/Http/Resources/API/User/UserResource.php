@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'neurologists_disease'  =>  $this->information?->neurologists_disease,
             'estimated_mental_age'  =>  $this->information?->estimated_mental_age,
             'is_patient'            =>  $this->information?->is_patient,
-            'checkpoint'            =>  $this->information?->checkpoint,
+            'checkpoint'            =>  $this->information?->checkpoint ?? 'CHECKPOINT_APPLICATION',
             'token'                 =>  $this->token ?? $request->bearerToken(),
             'age_activity'          =>  null
         ];

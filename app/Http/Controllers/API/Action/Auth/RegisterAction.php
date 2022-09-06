@@ -16,7 +16,8 @@ class RegisterAction extends APIController
     protected function invokeAction(array $validated)
     {
         $validated['password'] = Hash::make($validated['password']);
-        $user = User::create(['phone'   =>  'app-user'.Str::random(5)] + $validated);
+        $user = User::create([
+            'phone'   =>  'app-user'.Str::random(5)] + $validated);
         $user->load('information');
         $token = $user->createToken('api');
         $user->forceFill(['token' => $token->plainTextToken]);

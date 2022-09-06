@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 require __DIR__.'/actions.routes.php';
 // require __DIR__.'/screens.routes.php';
-// require __DIR__.'/data.routes.php';
+require __DIR__.'/data.routes.php';
