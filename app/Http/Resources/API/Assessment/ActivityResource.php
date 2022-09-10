@@ -2,10 +2,12 @@
 
 namespace App\Http\Resources\API\Assessment;
 
+use App\Support\Traits\WithPagination;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ActivityResource extends JsonResource
 {
+    use WithPagination;
     /**
      * Transform the resource into an array.
      *
