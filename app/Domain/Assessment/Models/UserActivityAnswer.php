@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Core\Models\Administration;
+namespace App\Domain\Assessment\Models;
 
 use App\Domain\Assessment\Models\Activity;
 use App\Domain\Assessment\Models\AgeActivity;
@@ -13,6 +13,11 @@ class UserActivityAnswer extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $table = 'user_activity_answers_log';
+
+    protected $casts = [
+        'passed' => 'boolean'
+    ];
     
     public function user()
     {

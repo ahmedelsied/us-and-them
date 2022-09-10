@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\User;
 
+use App\Http\Resources\API\Assessment\AgeActivityResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -23,9 +24,9 @@ class UserResource extends JsonResource
             'neurologists_disease'  =>  $this->information?->neurologists_disease,
             'estimated_mental_age'  =>  $this->information?->estimated_mental_age,
             'is_patient'            =>  $this->information?->is_patient,
-            'checkpoint'            =>  $this->information?->checkpoint ?? 'CHECKPOINT_APPLICATION',
+            'checkpoint'            =>  $this->checkpoint,
             'token'                 =>  $this->token ?? $request->bearerToken(),
-            'age_activity'          =>  null
+            'age_activity'          =>  new AgeActivityResource($this->getAgeActivity())
         ];
     }
 }

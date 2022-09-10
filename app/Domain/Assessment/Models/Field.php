@@ -25,4 +25,9 @@ class Field extends Model implements HasMedia
     {
         return $this->hasMany(Activity::class);
     }
+
+    public function user_answers()
+    {
+        return $this->hasMany(UserActivityAnswer::class,'field_id');
+    }
 }

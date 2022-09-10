@@ -2,6 +2,8 @@
 
 namespace App\Domain\Core\Models\Administration;
 
+use App\Domain\Assessment\Models\AgeActivity;
+use App\Domain\Core\Enums\Checkpoints;
 use App\Support\Concerns\HasFactory;
 use App\Support\Traits\HasPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,6 +42,27 @@ class User extends Authenticatable implements HasMedia
 
     public function getCheckpointAttribute()
     {
-        
+        return !empty($this->information?->checkpoint) ? $this->information?->checkpoint : Checkpoints::application()->value;
+    }
+
+    
+    public function getAgeActivity()
+    {
+        if($this->information?->checkpoint == Checkpoints::test()->value){
+
+            $currentAgeActivity = $this->information?->current_age_activity;
+
+             if(is_null($currentAgeActivity)){
+                return AgeActivity::whereIndex($currentAgeActivity)
+                                  ->with(['fields' => fn($q) => $q->withCount(['activities','user_answers']),'fields.activities','fields.activities.user_answer'])
+                                  ->first();
+             }else{
+                return AgeActivity::whereIndex($this->information?->mental_age)
+                                  ->with(['fields' => fn($q) => $q->withCount(['activities','user_answers']),'fields.activities','fields.activities.user_answer'])
+                                  ->first();
+             }
+        }
+
+        return null;
     }
 }

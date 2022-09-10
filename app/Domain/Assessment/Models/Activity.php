@@ -14,10 +14,23 @@ class Activity extends Model implements HasMedia
     use HasFactory,SoftDeletes,HasTranslations,InteractsWithMedia;
 
     protected $guarded = [];
-    protected $translatable = ['title','description'];
+    protected $with = ['media'];
+    protected $translatable = [
+        'title',
+        'description',
+        'activity_one_title',
+        'activity_two_title',
+        'activity_one_description',
+        'activity_two_description'
+    ];
 
     public function field()
     {
         return $this->belongsTo(Field::class);
+    }
+
+    public function user_answer()
+    {
+        return $this->hasOne(UserActivityAnswer::class,'activity_id');
     }
 }

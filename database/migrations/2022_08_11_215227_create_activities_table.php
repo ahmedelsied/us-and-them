@@ -21,6 +21,12 @@ return new class extends Migration
                   ->constrained('fields')
                   ->cascadeOnDelete();
 
+            $table->json('activity_one_title');
+            $table->json('activity_one_description');
+
+            $table->json('activity_two_title');
+            $table->json('activity_two_description');
+
             $table->unsignedSmallInteger('index')->default(0);
             $table->softDeletes();
             $table->timestamps();

@@ -14,11 +14,11 @@ class AgeActivitiesSeeder extends Seeder
      */
     public function run()
     {
-        for($i=0;$i<5;$i++){
+        for($i=0;$i<6;$i++){
             AgeActivity::create([
                 'title'  =>  [
-                    'en'    =>  'Age from '.($i+1).' to '.($i+2),
-                    'ar'    =>  'العمر من '.($i+1).' إلى '.($i+2)
+                    'en'    =>  'Age from '.$i.' to '.($i+1),
+                    'ar'    =>  'العمر من '.$i.' إلى '.($i+1)
                 ],
                 'index' =>  $i
             ]);
