@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('birthdate');
             $table->unsignedSmallInteger('mental_age')->nullable();
             $table->string('neurologists_disease')->nullable();
-            $table->unsignedSmallInteger('estimated_mental_age')->nullable();
+            $table->string('estimated_mental_age')->nullable();
             $table->boolean('is_patient')->default(false);
             $table->unsignedTinyInteger('current_age_activity')->nullable();
             $table->enum('checkpoint',['CHECKPOINT_APPLICATION','CHECKPOINT_TEST','CHECKPOINT_RESULT','CHECKPOINT_TREATMENT']);
