@@ -12,7 +12,7 @@ class GetActivities extends APIController
 {
     public function __invoke(Field $field)
     {
-        $activities = Activity::whereFieldId($field->id)->paginate();
+        $activities = Activity::whereFieldId($field->id)->with('user_answer')->paginate();
 
         return ApiResponse::success(ActivityResource::paginate($activities));
     }
