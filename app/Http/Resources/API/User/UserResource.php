@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'id'                    =>  $this->id,
             'name'                  =>  $this->name,
             'email'                 =>  $this->email,
-            'birthdate'             =>  $this->information?->birthdate->diff(Carbon::now())->format('%y years, %m months'),
+            'age'                   =>  $this->information?->birthdate->diff(Carbon::now())->format('%y years, %m months'),
             'mental_age'            =>  $this->information?->mental_age,
             'neurologists_disease'  =>  $this->information?->neurologists_disease,
             'estimated_mental_age'  =>  $this->information?->estimated_mental_age,
