@@ -51,7 +51,7 @@ class User extends Authenticatable implements HasMedia
         if($this->information?->checkpoint == Checkpoints::test()->value){
 
             $currentAgeActivity = $this->information?->current_age_activity;
-            $index = is_null($currentAgeActivity) ? $currentAgeActivity :  $this->information?->mental_age;
+            $index = !is_null($currentAgeActivity) ? $currentAgeActivity :  $this->information?->mental_age;
 
             return AgeActivity::whereIndex($index)
                               ->with(['fields' => fn($q) => $q->withCount(['activities','user_answers'])])

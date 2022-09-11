@@ -9,7 +9,6 @@ class APIServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->register(RouteServiceProvider::class);
         $this->app->singleton('api-responder', function () {
             return new JsonResponder();
         });
