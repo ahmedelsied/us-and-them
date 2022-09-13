@@ -19,5 +19,6 @@
     </div>
 @endsection
 @push('scripts')
+    <script rel="stylesheed" href="{{ asset('site/js/bootstrap.min.js') }}"></script>
     {{ $footer ?? '' }}
 @endpush

@@ -31,12 +31,21 @@ class ActivityController extends DashboardController
     protected function rules()
     {
         return [
-            'title'             =>  'required|array|size:2', 
-            'description'       =>  'required|array|size:2', 
-            'title.*'           =>  'required|string|max:191', 
-            'description.*'     =>  'required|string|max:191',
-            'field_id'          =>  'required|numeric|exists:fields,id',
-            'media'             =>  'nullable|mimes:mp4,mov,ogg,qt,jpg,jpeg,png,bmp,tiff|max:10000',
+            'title'                         =>  'required|array|size:2', 
+            'description'                   =>  'required|array|size:2', 
+            'title.*'                       =>  'required|string|max:191',
+            'description.*'                 =>  'required|string|max:191',
+            'activity_one_title'            =>  'required|array|size:2', 
+            'activity_one_description'      =>  'required|array|size:2', 
+            'activity_one_title.*'          =>  'required|string|max:191',
+            'activity_one_description.*'    =>  'required|string|max:191',
+            'activity_two_title'            =>  'required|array|size:2', 
+            'activity_two_description'      =>  'required|array|size:2', 
+            'activity_two_title.*'          =>  'required|string|max:191',
+            'activity_two_description.*'    =>  'required|string|max:191',
+            'field_id'                      =>  'required|numeric|exists:fields,id',
+            'video_url'                     =>  'nullable|numeric|exists:fields,id',
+            'media'                         =>  'required_without:video_url|image|max:5000',
         ];
     }
 

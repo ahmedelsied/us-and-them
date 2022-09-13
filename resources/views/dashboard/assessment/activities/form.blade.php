@@ -1,16 +1,19 @@
 <x-ui::form :route="$route" :name="$formName" :breadcrumbs="$formBreadCrumbs" :files="true">
-    <input type="hidden" name="age_activity_id" value="{{ request()->age_activity }}"/>
-    <x-ui::locale.input name="title" :label="__('Title')"/>
-    <x-ui::locale.input type="textarea" name="description" :label="__('Description')"/>
-    @if(is_null($model))
-        <x-ui::form.select :label="__('Age Activity')" name="" id="ageActivity" :options="$ageActivities"/>
-        <x-ui::form.select :label="__('Field')" id="fields" name="field_id" :options="[]"/>
-    @else
-        <x-ui::form.select :label="__('Field')" name="field_id" :selected="$model->field_id" :options="$fields"/>
-    @endif
-    <x-ui::form.input type="file" name="media" :label="__('Image Or Video (Optional)')"/>
+    {{-- <div class="show-info card">
+        <ul class="nav nav-tabs nav-tabs-highlight">
+            <li class="nav-item"><a href="#highlight-tab" class="nav-link active" data-toggle="tab">{{__('Main')}}</a></li>
+            <li class="nav-item"><a href="#highlight-tab1" class="nav-link" data-toggle="tab1">{{__('Suggested Activity One')}}</a></li>
+            <li class="nav-item"><a href="#highlight-tab2" class="nav-link" data-toggle="tab2">{{__('Suggested Activity Two')}}</a></li>
+        </ul>
+        <div class="tab-content card-body"> --}}
+            @include('dashboard.assessment.activities.partials.main-tab')
+            @include('dashboard.assessment.activities.partials.suggessted-activity-one-tab')
+            @include('dashboard.assessment.activities.partials.suggessted-activity-two-tab')
+        {{-- </div>
+    </div> --}}
     @if(is_null($model))
     <x-slot name="scripts">
+
         <script>
             $('#ageActivity').on('change',function(){
                 $.ajax({
