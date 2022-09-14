@@ -86,8 +86,8 @@
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo"
-                                         src="{{ asset('vendor/hsmfawaz/ui/metronic/assets/media/avatars/300-1.jpg') }}"/>
+                                    <img alt="avatar"
+                                        src="{{ filled(auth()->user()->avatar) ? auth()->user()->avatar :  asset('vendor/hsmfawaz/ui/metronic/assets/media/avatars/300-1.jpg') }}"/>
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
