@@ -44,7 +44,7 @@ class ActivityController extends DashboardController
             'activity_two_title.*'          =>  'required|string|max:191',
             'activity_two_description.*'    =>  'required|string|max:191',
             'field_id'                      =>  'required|numeric|exists:fields,id',
-            'video_url'                     =>  'nullable|numeric|exists:fields,id',
+            'video_url'                     =>  'nullable|url',
             'media'                         =>  'required_without:video_url|image|max:5000',
         ];
     }
