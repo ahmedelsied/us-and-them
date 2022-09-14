@@ -7,6 +7,7 @@
             .nav-link.active {
                 color: black;
                 background-color: #f9f9f9;
+                font-weight: bold;
             }
         </style>
     </x-slot>

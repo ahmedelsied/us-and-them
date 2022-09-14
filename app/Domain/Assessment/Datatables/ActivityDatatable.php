@@ -5,7 +5,6 @@ namespace App\Domain\Assessment\Datatables;
 use App\Domain\Assessment\Models\Activity;
 use App\Support\Dashboard\Datatables\BaseDatatable;
 use Illuminate\Database\Eloquent\Builder;
-use Yajra\DataTables\Html\Column;
 
 class ActivityDatatable extends BaseDatatable
 {
