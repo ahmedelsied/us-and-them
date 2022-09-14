@@ -16,7 +16,7 @@ use App\Domain\Assessment\Models\Field;
 use Arr;
 use Batch;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\Assessment\ActivityRequest;
 class ActivityController extends DashboardController
 {
     use WithDatatable,  WithForm , WithStore ,WithUpdate , WithDestroy;
@@ -31,29 +31,9 @@ class ActivityController extends DashboardController
         'activity_two_media'    =>  'activity_two_media',
     ];
 
-
-    protected function rules()
+    protected function validationAction(): array
     {
-        $rules = [
-            'title'                         =>  'required|array|size:2', 
-            'title.*'                       =>  'required|string|max:191',
-            'activity_one_description'      =>  'required|array|size:2',
-            'activity_one_description.*'    =>  'required|string|max:191',
-            'activity_two_description'      =>  'required|array|size:2',
-            'activity_two_description.*'    =>  'required|string|max:191',
-            'field_id'                      =>  'required|numeric|exists:fields,id',
-            'activity_one_video_url'        =>  'nullable|url',
-            'activity_two_video_url'        =>  'nullable|url',
-            'activity_one_media'            =>  'required_without:activity_one_video_url|image|max:5000',
-            'activity_two_media'            =>  'required_without:activity_two_video_url|image|max:5000',
-        ];
-
-        if(request()->isMethod('PUT')){
-            $rules['activity_one_media'] = 'nullable:activity_one_video_url|image|max:5000';
-            $rules['activity_two_media'] = 'nullable:activity_one_video_url|image|max:5000';
-        }
-
-        return $rules;
+        return app(ActivityRequest::class)->validated();
     }
 
     public function saveSorting(Request $request)

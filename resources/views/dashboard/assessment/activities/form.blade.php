@@ -16,7 +16,11 @@
         </style>
     </x-slot>
     @if(!$errors->isEmpty())
-        @dump($errors->all())
+        <ul>
+        @foreach ($errors->all() as $error)
+            <li class="text-danger">{{ $error }}</li>        
+        @endforeach
+        </ul>
     @endif
     <div class="show-info card">
         <ul class="nav nav-tabs nav-tabs-highlight">
