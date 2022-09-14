@@ -27,7 +27,7 @@ return new class extends Migration
             $table->json('activity_two_title');
             $table->json('activity_two_description');
             
-            $table->text('video_url');
+            $table->text('video_url')->nullable();
 
             $table->unsignedSmallInteger('index')->default(0);
             $table->softDeletes();
