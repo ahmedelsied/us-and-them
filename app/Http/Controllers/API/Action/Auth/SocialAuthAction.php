@@ -15,9 +15,7 @@ class SocialAuthAction extends APIController
     private $user;
     protected function invokeAction(array $validated)
     {
-        if($this->isUserNotExists($validated)){
-            $this->user = $this->newUser($validated);
-        }
+        $this->isUserNotExists($validated) ?? $this->newUser($validated);
 
         $token = $this->user->createToken('api');
         $this->user->forceFill(['token' => $token->plainTextToken]);
@@ -27,17 +25,15 @@ class SocialAuthAction extends APIController
     private function isUserNotExists($validated)
     {
         $this->user = User::wherePlatform($validated['platform'])->whereUid($validated['uid'])->with('information')->first();
-        return is_null($this->user);
+        return $this->user;
     }
 
     private function newUser($validated)
     {
-        $user = User::create([
+        $this->user = User::create([
             'name'    =>  'uat-user-'.Str::random(3)
             ] + $validated);
-        $user->load('information');
-
-        return $user;
+        $this->user->load('information');
     }
 
     protected function rules()
