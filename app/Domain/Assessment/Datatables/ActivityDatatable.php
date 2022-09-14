@@ -19,8 +19,6 @@ class ActivityDatatable extends BaseDatatable
         return [
             $this->column('id',__('ID')),
             $this->column('title.en',__('Title')),
-            $this->column('description.en',__('Description')),
-            $this->column('description.en',__('Description')),
             $this->column('field',__('Field')),
         ];
     }
