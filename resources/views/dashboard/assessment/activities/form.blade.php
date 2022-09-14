@@ -9,6 +9,10 @@
                 background-color: #f9f9f9;
                 font-weight: bold;
             }
+            .image-input,.image-input.image-input-outline .image-input-wrapper{
+                width: 100% !important;
+                height: 200px !important;
+            }
         </style>
     </x-slot>
     @if(!$errors->isEmpty())
