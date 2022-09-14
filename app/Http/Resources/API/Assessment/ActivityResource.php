@@ -16,28 +16,27 @@ class ActivityResource extends JsonResource
      */
     public function toArray($request)
     {
-        $activity_one_url = $this->getFirstMediaUrl('activity_one');
-        $activity_two_url = $this->getFirstMediaUrl('activity_two');
+        $activity_one_url = $this->getFirstMediaUrl('activity_one_media') ?? $this->activity_one_video_url;
+        $activity_two_url = $this->getFirstMediaUrl('activity_two_media') ?? $this->activity_two_video_url;
+        $typeOne = $this->activity_one_video_url == $activity_one_url ? 'video' : 'image';
+        $typeTwo = $this->activity_two_video_url == $activity_two_url ? 'video' : 'image';
 
         return    [
             'id'                        =>  $this->id,
             'title'                     =>  $this->title,
-            'description'               =>  $this->description,
             'suggested_activites'       =>  [
                                                 [
-                                                    'title'  =>  $this->activity_one_title,
                                                     'description'       => $this->activity_one_description,
                                                     'media' =>  [
-                                                        'type'   => 'image',
-                                                        'url'   => $activity_one_url,
+                                                        'type'  =>  $typeOne,
+                                                        'url'   =>  $activity_one_url,
                                                     ]
                                                 ],
                                                 [
-                                                    'title'  =>  $this->activity_two_title,
                                                     'description'       => $this->activity_two_description,
                                                     'media' =>  [
-                                                        'type'   => 'image',
-                                                        'url'   => $activity_two_url,
+                                                        'type'  =>  $typeTwo,
+                                                        'url'   =>  $activity_two_url,
                                                     ]
                                                 ]
                                             ],
