@@ -21,10 +21,10 @@ return new class extends Migration
                   ->cascadeOnDelete();
 
             $table->json('activity_one_description');
-            $table->json('activity_one_video_url')->nullable();
+            $table->text('activity_one_video_url')->nullable();
 
             $table->json('activity_two_description');
-            $table->json('activity_two_video_url')->nullable();
+            $table->text('activity_two_video_url')->nullable();
 
             $table->unsignedSmallInteger('index')->default(0);
             $table->softDeletes();
