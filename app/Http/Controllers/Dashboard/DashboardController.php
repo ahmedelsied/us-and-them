@@ -29,6 +29,8 @@ class DashboardController extends BaseController
 
     protected array $permissions;
 
+    protected array $files;
+
     public function __construct()
     {
         if (isset($this->permissions)) {

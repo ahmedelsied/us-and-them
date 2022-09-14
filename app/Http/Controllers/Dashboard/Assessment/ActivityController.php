@@ -26,52 +26,34 @@ class ActivityController extends DashboardController
     protected string $datatable = ActivityDatatable::class;
     protected string $model = Activity::class;
     protected array $permissions = [AssessmentPermissions::class, 'activities'];
+    protected array $files = [
+        'activity_one_media'    =>  'activity_one_media',
+        'activity_two_media'    =>  'activity_two_media',
+    ];
 
 
     protected function rules()
     {
-        return [
+        $rules = [
             'title'                         =>  'required|array|size:2', 
-            'description'                   =>  'required|array|size:2', 
             'title.*'                       =>  'required|string|max:191',
-            'description.*'                 =>  'required|string|max:191',
-            'activity_one_title'            =>  'required|array|size:2', 
-            'activity_one_description'      =>  'required|array|size:2', 
-            'activity_one_title.*'          =>  'required|string|max:191',
+            'activity_one_description'      =>  'required|array|size:2',
             'activity_one_description.*'    =>  'required|string|max:191',
-            'activity_two_title'            =>  'required|array|size:2', 
-            'activity_two_description'      =>  'required|array|size:2', 
-            'activity_two_title.*'          =>  'required|string|max:191',
+            'activity_two_description'      =>  'required|array|size:2',
             'activity_two_description.*'    =>  'required|string|max:191',
             'field_id'                      =>  'required|numeric|exists:fields,id',
-            'video_url'                     =>  'nullable|url',
-            'media'                         =>  'required_without:video_url|image|max:5000',
+            'activity_one_video_url'        =>  'nullable|url',
+            'activity_two_video_url'        =>  'nullable|url',
+            'activity_one_media'            =>  'required_without:activity_one_video_url|image|max:5000',
+            'activity_two_media'            =>  'required_without:activity_two_video_url|image|max:5000',
         ];
-    }
 
-    protected function storeAction(array $validated)
-    {
-        $media = null;
-        if(Arr::has($validated,'media')){
-            $media = Arr::pull($validated,'media');
+        if(request()->isMethod('PUT')){
+            $rules['activity_one_media'] = 'nullable:activity_one_video_url|image|max:5000';
+            $rules['activity_two_media'] = 'nullable:activity_one_video_url|image|max:5000';
         }
-        $model = ($this->model)::create($validated);
 
-        if(!is_null($media)){
-            $model->addMedia($media)->toMediaCollection();
-        }
-    }
-
-    protected function updateAction(array $validated, Model $model)
-    {
-        if(Arr::has($validated,'media')){
-            $media = Arr::pull($validated,'media');
-            $model->clearMediaCollection();
-            $model->addMedia($media)->toMediaCollection();
-        }
-        $model->update($validated);
-
-        return null;
+        return $rules;
     }
 
     public function saveSorting(Request $request)

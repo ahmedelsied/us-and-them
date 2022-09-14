@@ -16,18 +16,15 @@ return new class extends Migration
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
             $table->json('title');
-            $table->json('description');
             $table->foreignId('field_id')
                   ->constrained('fields')
                   ->cascadeOnDelete();
 
-            $table->json('activity_one_title');
             $table->json('activity_one_description');
+            $table->json('activity_one_video_url')->nullable();
 
-            $table->json('activity_two_title');
             $table->json('activity_two_description');
-            
-            $table->text('video_url')->nullable();
+            $table->json('activity_two_video_url')->nullable();
 
             $table->unsignedSmallInteger('index')->default(0);
             $table->softDeletes();
