@@ -10,7 +10,7 @@ return static function (SidebarGenerator $sidebar) {
         ->addMenu(
             name: __('Portage'),
             icon: 'fa fa-file-contract',
-            permission: AssessmentPermissions::fields()->can('read'),
+            permission: AssessmentPermissions::activities()->can('read'),
             links: function ($menu) {
                 // $allFields = Field::all();
                 // $menu->addLink(
