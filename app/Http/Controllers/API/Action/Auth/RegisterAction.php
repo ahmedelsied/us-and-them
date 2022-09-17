@@ -31,5 +31,4 @@ class RegisterAction extends APIController
             'name'      =>  'required|string'
         ];
     }
-    
 }

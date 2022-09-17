@@ -7,6 +7,7 @@ use App\Domain\Core\Enums\Checkpoints;
 use App\Domain\Core\Models\Administration\UserInformation;
 use App\Http\Resources\API\Assessment\AgeActivityResource;
 use App\Support\Dashboard\Crud\WithInvoke;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 
 class CompleteApplicationAction extends APIController
@@ -19,7 +20,7 @@ class CompleteApplicationAction extends APIController
             $age = Carbon::parse($validated['birthdate'])->age;
             $mentalAge = $validated['is_patient'] ? ($age-2) : ($age-1);
             $user = auth()->user();
-            
+            $user->update(['name' => Arr::pull($validated,'name')]);
             UserInformation::create([
                 'user_id'               =>  $user->id,
                 'mental_age'            =>  $mentalAge,
@@ -39,6 +40,7 @@ class CompleteApplicationAction extends APIController
     protected function rules()
     {
         return [
+            'name'                  =>  'required|string|max:100',
             'birthdate'             =>  'required|date|date_format:Y-m-d',
             'neurologists_disease'  =>  'nullable|string',
             'estimated_mental_age'  =>  'nullable|string',

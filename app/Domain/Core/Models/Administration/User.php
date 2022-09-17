@@ -3,6 +3,7 @@
 namespace App\Domain\Core\Models\Administration;
 
 use App\Domain\Assessment\Models\AgeActivity;
+use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
 use App\Support\Concerns\HasFactory;
 use App\Support\Traits\HasPassword;
@@ -60,5 +61,17 @@ class User extends Authenticatable implements HasMedia
         }
 
         return null;
+    }
+
+    public function answers_log()
+    {
+        return $this->hasMany(UserActivityAnswer::class);
+    }
+
+    public function updateCheckpoint($checkpoint)
+    {
+        $this->information()->update([
+            'checkpoint'    =>  $checkpoint
+        ]);
     }
 }

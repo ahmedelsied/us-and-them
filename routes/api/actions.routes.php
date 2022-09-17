@@ -1,4 +1,7 @@
 <?php
+
+use App\Http\Middleware\API\Assessment\ActivityLogAuthorize;
+
 route_group(['namespace' => 'App\Http\Controllers\API\Action', 'prefix' => 'actions', 'middleware' => ['auth:sanctum']], function () {
     route_group('auth', function () {
         Route::post('login', 'LoginAction')->withoutMiddleware('auth:sanctum');
@@ -8,5 +11,6 @@ route_group(['namespace' => 'App\Http\Controllers\API\Action', 'prefix' => 'acti
 
     route_group('assessment',function(){
         Route::post('complete-application', 'CompleteApplicationAction');
+        Route::post('answer-activity','AnswerActivityAction')->middleware(ActivityLogAuthorize::class);
     });
 });
