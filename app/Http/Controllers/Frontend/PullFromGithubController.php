@@ -9,7 +9,6 @@ class PullFromGithubController extends Controller
     public function __invoke()
     {
         shell_exec('git pull origin main');
-        $output = shell_exec('php '.base_path().'/artisan migrate 2>&1');
-        dd($output);
+        shell_exec('php '.base_path().'/artisan migrate');
     }
 }
