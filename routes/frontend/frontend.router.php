@@ -7,4 +7,4 @@ Route::get('/', function () {
     return 'helsdlo-world';
 });
 
-Route::get('pull-from-github','PullFromGithubController');
+Route::post('pull-from-github','PullFromGithubController');
