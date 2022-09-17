@@ -8,7 +8,6 @@ class PullFromGithubController extends Controller
 {
     public function __invoke()
     {
-        $output = shell_exec('git pull origin main 2>&1');
-        dd($output);
+        shell_exec('git pull origin main 2>&1');
     }
 }
