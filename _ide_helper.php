@@ -19610,12 +19610,12 @@
      
 }
 
-    namespace App\Http\Requests\Dashboard\Auth { 
+    namespace App\Http\Requests\Assessment { 
             /**
      * 
      *
      */ 
-        class LoginRequest {
+        class ActivityRequest {
          
     }
      
@@ -19627,6 +19627,17 @@
      *
      */ 
         class FormRequest {
+         
+    }
+     
+}
+
+    namespace App\Http\Requests\Dashboard\Auth { 
+            /**
+     * 
+     *
+     */ 
+        class LoginRequest {
          
     }
      
