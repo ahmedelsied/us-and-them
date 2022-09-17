@@ -9,4 +9,3 @@ Route::get('/', function () {
 });
 
 Route::post('pull-from-github','PullFromGithubController')->withoutMiddleware([VerifyCsrfToken::class]);
-Route::get('get-pull-from-github','PullFromGithubController')->withoutMiddleware([VerifyCsrfToken::class]);
