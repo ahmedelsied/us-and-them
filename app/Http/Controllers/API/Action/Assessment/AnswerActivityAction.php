@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API\Action\Assessment;
 
 use App\API\Http\Controllers\APIController;
+use App\Domain\Assessment\Models\Activity;
+use App\Domain\Assessment\Models\Field;
 use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
+use App\Http\Resources\API\Assessment\AgeActivityResource;
 use App\Support\Dashboard\Crud\WithInvoke;
 
 class AnswerActivityAction extends APIController
@@ -15,14 +18,15 @@ class AnswerActivityAction extends APIController
 
     protected function invokeAction(array $validated)
     {
-        $this->userAgeActivity = auth()->user()->information?->current_age_activity;
-
+        $this->user = auth()->user(); 
+        $this->userAgeActivity = $this->user->information?->current_age_activity;
         if($this->notAllowedToAnswerThisField($validated)){
             return $this->error(__('This age activity has been closed and we will show your result'));
         }
 
         if($this->alreadyAnsweredActivity($validated['activity_id'])){
-            return $this->error(__('You\'ve already answered this activity before'));
+            $userAgeActivity = new AgeActivityResource($this->user->getAgeActivity());
+            return $this->error(__('You\'ve already answered this activity before'),400,$userAgeActivity);
         }
 
         $answer = UserActivityAnswer::create([
@@ -56,9 +60,27 @@ class AnswerActivityAction extends APIController
     private function handleResponse($answer)
     {
         if($this->countOfLatestAnswers == 4 && $this->countOfLastPassedAnswers == 0 && !$answer->passed){
-            auth()->user()->updateCheckpoint(Checkpoints::result()->value);
+            $this->user->updateCheckpoint(Checkpoints::result()->value);
             return $this->success('Success And Age Activity Closed');
         }
+
+        $countOfActivities = Field::withCount('activities')
+                                  ->whereAgeActivityId($this->userAgeActivity)
+                                  ->get()
+                                  ->pluck('activities_count')->all();
+
+        $countOfActivities = array_sum($countOfActivities);
+        $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)->whereUserId(auth()->id())->count();
+
+        if($countOfActivities == $countOfAnswers){
+            if($this->userAgeActivity == 5){
+                return $this->success('Congratulations you\'ve passed all age activities!');
+            }else{
+                $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
+                return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
+            }
+        }
+
         return $this->executed();
     }
 

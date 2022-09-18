@@ -6,12 +6,12 @@ use Illuminate\Http\JsonResponse;
 
 class JsonResponder
 {
-    public function success($body, int $code = 200, array $extra = []): JsonResponse
+    public function success($body, int $code = 200, mixed $extra = []): JsonResponse
     {
         return $this->base($body, $code, $extra);
     }
 
-    public function error($body, int $code = 400, array $extra = []): JsonResponse
+    public function error($body, int $code = 400, mixed $extra = []): JsonResponse
     {
         return $this->base($body, $code, $extra, false);
     }
@@ -34,7 +34,7 @@ class JsonResponder
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    private function base($body, int $code, array $extra, bool $status = true): JsonResponse
+    private function base($body, int $code, mixed $extra, bool $status = true): JsonResponse
     {
         $bodyAttribute = $status ? 'data' : 'message';
         $response = [
@@ -43,7 +43,7 @@ class JsonResponder
             'code'         => $code,
         ];
 
-        if (count($extra) > 0) {
+        if (!empty($extra)) {
             $response['extra'] = $extra;
         }
 
