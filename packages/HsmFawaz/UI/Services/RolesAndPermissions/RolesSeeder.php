@@ -7,6 +7,7 @@ use App\Domain\Assessment\Enums\AssessmentPermissions;
 use HsmFawaz\UI\Services\RolesAndPermissions\Concerns\HasPermissionMap;
 use HsmFawaz\UI\Services\RolesAndPermissions\Roles\ManagerRole;
 use HsmFawaz\UI\Services\RolesAndPermissions\Roles\SuperAdminRole;
+use HsmFawaz\UI\Services\RolesAndPermissions\Roles\UserRole;
 use Illuminate\Database\Seeder;
 
 class RolesSeeder extends Seeder
@@ -16,6 +17,7 @@ class RolesSeeder extends Seeder
     protected array $roles = [
         SuperAdminRole::class,
         ManagerRole::class,
+        UserRole::class,
     ];
 
     protected array $permissions = [
