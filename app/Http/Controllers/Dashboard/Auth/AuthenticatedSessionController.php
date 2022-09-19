@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\Auth\LoginRequest;
+use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('dashboard.auth.login');
+        $quote = Inspiring::quote();
+        $quoteArr = explode('-',$quote);
+        $quote = $quoteArr[0];
+        $author = $quoteArr[1];
+        return view('dashboard.auth.login')->with([
+            'quote' => $quote,
+            'author' => $author,
+        ]);
     }
 
     /**

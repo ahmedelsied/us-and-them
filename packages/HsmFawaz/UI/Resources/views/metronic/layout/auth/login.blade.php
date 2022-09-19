@@ -18,24 +18,26 @@
             <!--begin::Wrapper-->
             <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
                 <!--begin::Content-->
-                <div class="d-flex text-white flex-row-fluid flex-column text-center p-10 pt-lg-20">
+                <div class="d-flex text-white flex-row-fluid flex-column text-center px-10 pt-lg-20">
                     <!--begin::Logo-->
                     <a href="/" class="py-9 mb-5">
-                        <img alt="Logo" src="{{ asset('templates/diets/v2/img/logo_white.png') }}" class="h-60px"/>
+                        <img alt="Logo" src="{{ asset('site/images/logo.svg') }}" class="h-60px"/>
                     </a>
                     <!--end::Logo-->
                     <!--begin::Title-->
                     <h1 class="fw-bolder text-white fs-2qx "
-                    >{{ __('Welcome to SST System') }}</h1>
+                    >{{ __('Welcome to Us & Them dashboard') }}</h1>
                     <!--end::Title-->
                     <!--begin::Description-->
-                    <p class="fw-bold fs-2">{{ __('Make your clients happy') }}</p>
+                    <div class="fs-5 pt-3">
+                        <q>{{ $quote }}</q> <br>-{{ $author }}
+                    </div>
                     <!--end::Description-->
                 </div>
                 <!--end::Content-->
                 <!--begin::Illustration-->
                 <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                     style="background-image: url(vendor/hsmfawaz/ui/metronic/assets/media/illustrations/sketchy-1/13.png"></div>
+                     style="background-image: url({{ asset('site/images/unknown-removebg-preview.png') }})"></div>
                 <!--end::Illustration-->
             </div>
             <!--end::Wrapper-->
