@@ -18,7 +18,7 @@ class RegisterAction extends APIController
         $validated['password'] = Hash::make($validated['password']);
         $user = User::create($validated);
         $user->load('information');
-        $user->assignRole('User');
+        $user->assignRole('user');
         $token = $user->createToken('api');
         $user->forceFill(['token' => $token->plainTextToken]);
         return $this->success(new UserResource($user));
