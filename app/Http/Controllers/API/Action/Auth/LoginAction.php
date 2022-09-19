@@ -17,7 +17,6 @@ class LoginAction extends APIController
         if(Auth::attempt(['email'=>$validated['email'],'password'=>$validated['password']])){
             $user = User::with('information')->whereEmail($validated['email'])->first();
             $token = $user->createToken('api');
-            $user->assignRole('user');
             $user->forceFill(['token' => $token->plainTextToken]);
             return $this->success(new UserResource($user));
         }
