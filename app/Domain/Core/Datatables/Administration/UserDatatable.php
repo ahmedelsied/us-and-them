@@ -47,7 +47,7 @@ class UserDatatable extends BaseDatatable
             'roles' => static function ($model) {
                 $roles = [];
                 foreach ($model->getRoleNames() as $name) {
-                    if (in_array($name, RolesEnum::toLabels(), true)) {
+                    if (in_array($name, RolesEnum::toValues(), true)) {
                         continue;
                     }
                     $roles[] = StatusColumn::render('success', $name);

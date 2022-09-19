@@ -11,7 +11,7 @@ use Spatie\Enum\Laravel\Enum;
  **/
 class RolesEnum extends Enum
 {
-    protected static function labels()
+    protected static function values()
     {
         return [
             'super' => 'Super Admin',
