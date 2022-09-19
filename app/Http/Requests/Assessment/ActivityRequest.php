@@ -26,11 +26,11 @@ class ActivityRequest extends FormRequest
         
         $rules = [
             'title'                         =>  'required|array|size:2', 
-            'title.*'                       =>  'required|string|max:191',
+            'title.*'                       =>  'required|string',
             'activity_one_description'      =>  'required|array|size:2',
-            'activity_one_description.*'    =>  'required|string|max:191',
+            'activity_one_description.*'    =>  'required|string',
             'activity_two_description'      =>  'required|array|size:2',
-            'activity_two_description.*'    =>  'required|string|max:191',
+            'activity_two_description.*'    =>  'required|string',
             'field_id'                      =>  'required|numeric|exists:fields,id',
             'activity_one_video_url'        =>  'nullable|url',
             'activity_two_video_url'        =>  'nullable|url',
