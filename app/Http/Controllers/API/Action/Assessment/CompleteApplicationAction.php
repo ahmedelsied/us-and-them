@@ -21,12 +21,13 @@ class CompleteApplicationAction extends APIController
             $mentalAge = $validated['is_patient'] ? ($age-2) : ($age-1);
             $user = auth()->user();
             $user->update(['name' => Arr::pull($validated,'name')]);
-            UserInformation::create([
-                'user_id'               =>  $user->id,
-                'mental_age'            =>  $mentalAge,
-                'current_age_activity'  =>  $mentalAge,
-                'checkpoint'            =>  Checkpoints::test()->value,
-            ] + $validated);
+            $user->information()->create((
+                            [
+                                'mental_age'            =>  $mentalAge,
+                                'current_age_activity'  =>  $mentalAge,
+                                'checkpoint'            =>  Checkpoints::test()->value,
+                            ] + 
+                            $validated ));
             
             $user->refresh();
 

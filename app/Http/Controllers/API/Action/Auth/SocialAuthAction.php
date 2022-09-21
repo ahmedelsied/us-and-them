@@ -18,6 +18,7 @@ class SocialAuthAction extends APIController
         $this->isUserNotExists($validated) ?? $this->newUser($validated);
 
         $token = $this->user->createToken('api');
+        $this->user->assignRole('user');
         $this->user->forceFill(['token' => $token->plainTextToken]);
         return $this->success(new UserResource($this->user));
     }
