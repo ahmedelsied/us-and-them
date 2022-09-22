@@ -10,5 +10,6 @@ class PullFromGithubController extends Controller
     {
         shell_exec('git pull origin main');
         shell_exec('php '.base_path().'/artisan migrate');
+        shell_exec('php '.base_path().'/artisan optimize:clear');
     }
 }
