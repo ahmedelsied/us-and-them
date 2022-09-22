@@ -18,11 +18,8 @@ class CompleteApplicationAction extends APIController
     {
         if(!UserInformation::whereUserId(auth()->id())->exists()){
             $age = Carbon::parse($validated['birthdate'])->age;
-            if($age > 1){
-                $mentalAge = $validated['is_patient'] ? ($age-2) : ($age-1);
-            }else{
-                $mentalAge = 0;
-            }
+            $mentalAge = $this->setMentalAge($age,$validated['is_patient']);
+            
             $user = auth()->user();
             $user->update(['name' => Arr::pull($validated,'name')]);
             $user->information()->create((
@@ -40,6 +37,16 @@ class CompleteApplicationAction extends APIController
         }
 
         return $this->error(__('Wrong Checkpoint'));
+    }
+
+    private function setMentalAge($age,$is_patient)
+    {
+        $mentalAge = 0;
+        if($age > 1){
+            $mentalAge = $is_patient ? ($age-2) : ($age-1);
+        }
+
+        return $mentalAge;
     }
 
     protected function rules()
