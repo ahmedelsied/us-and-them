@@ -18,11 +18,13 @@ class APIController extends BaseController
 
     public function success(mixed $message, int $code = 200, mixed $extra = []): JsonResponse
     {
+        $this->setAr();
         return ApiResponse::success($message, $code, $extra);
     }
 
     public function error(mixed $message, int $code = 400, mixed $extra = []): JsonResponse
     {
+        $this->setAr();
         return ApiResponse::error($message, $code, $extra);
     }
 
@@ -40,7 +42,13 @@ class APIController extends BaseController
 
     public function executed(): JsonResponse
     {
+        $this->setAr();
         return ApiResponse::executed();
+    }
+
+    private function setAr()
+    {
+        app()->setLocale('ar');
     }
 
     protected function validationAction(): array
