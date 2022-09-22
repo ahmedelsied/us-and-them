@@ -18,7 +18,11 @@ class CompleteApplicationAction extends APIController
     {
         if(!UserInformation::whereUserId(auth()->id())->exists()){
             $age = Carbon::parse($validated['birthdate'])->age;
-            $mentalAge = $validated['is_patient'] ? ($age-2) : ($age-1);
+            if($age > 1){
+                $mentalAge = $validated['is_patient'] ? ($age-2) : ($age-1);
+            }else{
+                $mentalAge = 0;
+            }
             $user = auth()->user();
             $user->update(['name' => Arr::pull($validated,'name')]);
             $user->information()->create((
