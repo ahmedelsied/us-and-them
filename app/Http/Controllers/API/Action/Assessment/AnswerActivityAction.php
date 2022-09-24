@@ -37,7 +37,7 @@ class AnswerActivityAction extends APIController
 
         return $this->handleResponse($answer);
     }
-    
+
     private function notAllowedToAnswerThisField($validated)
     {
         $lastFiveAnswers = UserActivityAnswer::whereUserId(auth()->id())
@@ -60,8 +60,7 @@ class AnswerActivityAction extends APIController
     private function handleResponse($answer)
     {
         if($this->countOfLatestAnswers == 4 && $this->countOfLastPassedAnswers == 0 && !$answer->passed){
-            $this->user->updateCheckpoint(Checkpoints::result()->value);
-            return $this->success('Success And Age Activity Closed');
+            return $this->closeTestPhase();
         }
 
         $countOfActivities = Field::withCount('activities')
@@ -74,12 +73,22 @@ class AnswerActivityAction extends APIController
 
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
+                $this->user->updateCheckpoint(Checkpoints::result()->value);
                 return $this->success('Congratulations you\'ve passed all age activities!');
-            }else{
-                $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
-                return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
             }
+            if($this->user->information?->birthdate->age == (1 + $this->userAgeActivity)){
+                return $this->closeTestPhase();
+            }
+
+            $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
+            return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
         }
+    }
+
+    private function closeTestPhase()
+    {
+        $this->user->updateCheckpoint(Checkpoints::result()->value);
+        return $this->success('Success And Age Activity Closed');
     }
 
     protected function rules()
