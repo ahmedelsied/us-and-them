@@ -21,7 +21,6 @@ class UpdateProfileAction extends APIController
             return $this->error(__('Wrong Password'));
         }
         $this->user->update($this->data);
-        return $this->executed();
     }
 
     private function setProfileData($validated)

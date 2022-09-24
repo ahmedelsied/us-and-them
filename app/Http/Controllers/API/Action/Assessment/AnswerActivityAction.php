@@ -80,8 +80,6 @@ class AnswerActivityAction extends APIController
                 return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
             }
         }
-
-        return $this->executed();
     }
 
     protected function rules()
