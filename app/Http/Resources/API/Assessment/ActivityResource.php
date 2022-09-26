@@ -16,8 +16,8 @@ class ActivityResource extends JsonResource
      */
     public function toArray($request)
     {
-        $activity_one_url = $this->getFirstMediaUrl('activity_one_media') ?? $this->activity_one_video_url;
-        $activity_two_url = $this->getFirstMediaUrl('activity_two_media') ?? $this->activity_two_video_url;
+        $activity_one_url = !empty($this->getFirstMediaUrl('activity_one_media')) ? $this->getFirstMediaUrl('activity_one_media') : $this->activity_one_video_url;
+        $activity_two_url = !empty($this->getFirstMediaUrl('activity_two_media')) ? $this->getFirstMediaUrl('activity_two_media') : $this->activity_two_video_url;
         $typeOne = $this->activity_one_video_url == $activity_one_url ? 'video' : 'image';
         $typeTwo = $this->activity_two_video_url == $activity_two_url ? 'video' : 'image';
 
