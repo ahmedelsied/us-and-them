@@ -34,7 +34,7 @@ class ActivityLogAuthorize
 
         return (
             auth()->user()->information?->checkpoint == Checkpoints::test()->value &&
-            $userAgeActivity == $field->age_activity_id &&
+            ($userAgeActivity == $field->age_activity_id || ($field->age_activity_id == 1 && $userAgeActivity <= 1)) &&
             $activity->field_id == $field->id
         );
     }
