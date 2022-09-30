@@ -26,7 +26,6 @@ class AppAuthAlgorithm
     private function isCorrectAlgorithmOutput($request)
     {
         $base = '$2y$10$9JZoJDlaR8/uxoQRpVembeKPBnJwn7qpCow9p6QMYxnpBPvWpa3Ua';
-        // dd(hash('sha1',$base));
         return ($request->hasHeader('Auth-Header') && Hash::check($base,$request->header('Auth-Header')));
     }
 }
