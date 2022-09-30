@@ -42,8 +42,6 @@
         <li>Redistribute content from Us and them</li>
     </ul>
 
-    <p>This Agreement shall begin on the date hereof. Our Terms and Conditions were created with the help of the <a href="https://www.termsandconditionsgenerator.com/">Free Terms and Conditions Generator</a>.</p>
-
     <p>Parts of this website offer an opportunity for users to post and exchange opinions and information in certain areas of the website. Us and them does not filter, edit, publish or review Comments prior to their presence on the website. Comments do not reflect the views and opinions of Us and them,its agents and affiliates. Comments reflect the views and opinions of the person who post their views and opinions. To the extent permitted by applicable laws, Us and them shall not be liable for the Comments or for any liability, damages or expenses caused and suffered as a result of any use of and posting of and appearance of the Comments on this website.</p>
 
     <p>Us and them reserves the right to monitor all Comments and to remove any Comments which can be considered inappropriate, offensive or causes breach of these Terms and Conditions.</p>
