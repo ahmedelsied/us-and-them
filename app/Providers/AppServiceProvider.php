@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        if(request()->hasHeader('Accept-Language')){
+            app()->setLocale(request()->header('Accept-Language'));
+        }
         Validator::includeUnvalidatedArrayKeys();
         View::composer('ui::layout.master', static function ($view) {
             $routes = require resource_path('sidebar/sidebar.php');
