@@ -3,5 +3,4 @@ route_group(['namespace' => 'App\Http\Controllers\API\Data', 'prefix' => 'data',
         Route::get('user-checkpoint', 'GetUserCheckpoint');
         Route::get('age-activity', 'GetAgeActivity');
         Route::get('activities/{field}', 'GetActivities');
-        Route::get('current-treatment','GetTreatmentFields');
 });
