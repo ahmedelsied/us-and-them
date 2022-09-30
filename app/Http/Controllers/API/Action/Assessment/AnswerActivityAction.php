@@ -12,18 +12,21 @@ use App\Support\Dashboard\Crud\WithInvoke;
 class AnswerActivityAction extends APIController
 {
     use WithInvoke;
+    private $user;
+    private $validated;
     private $userAgeActivity;
     private $countOfLastPassedAnswers;
 
     protected function invokeAction(array $validated)
     {
+        $this->validated = $validated; 
         $this->user = auth()->user(); 
         $this->userAgeActivity = $this->user->information?->current_age_activity;
-        if($this->notAllowedToAnswerThisField($validated)){
+        if($this->notAllowedToAnswerThisField()){
             return $this->error(__('This age activity has been closed and we will show your result'));
         }
 
-        if($this->alreadyAnsweredActivity($validated['activity_id'])){
+        if($this->alreadyAnsweredActivity($this->validated['activity_id'])){
             $userAgeActivity = new AgeActivityResource($this->user->getAgeActivity());
             return $this->error(__('You\'ve already answered this activity before'),400,$userAgeActivity);
         }
@@ -32,15 +35,15 @@ class AnswerActivityAction extends APIController
                                     'user_id'   =>  auth()->id(),
                                     'age_activity_id'   =>  ($this->userAgeActivity == 0 ? 1 : $this->userAgeActivity)
                                     ] + 
-                                    $validated);
+                                    $this->validated);
 
         return $this->handleResponse($answer);
     }
 
-    private function notAllowedToAnswerThisField($validated)
+    private function notAllowedToAnswerThisField()
     {
         $lastFiveAnswers = UserActivityAnswer::whereUserId(auth()->id())
-                                             ->whereFieldId($validated['field_id'])
+                                             ->whereFieldId($this->validated['field_id'])
                                              ->whereAgeActivityId($this->userAgeActivity)
                                              ->limit(5)
                                              ->orderBy('id','DESC')
@@ -93,7 +96,8 @@ class AnswerActivityAction extends APIController
     {
         $this->user->updateCheckpoint(Checkpoints::result()->value);
         $this->user->information?->update([
-            'treatment_age_activity' => $this->userAgeActivity
+            'treatment_age_activity'    => $this->userAgeActivity,
+            'ceil_field_id'             => $this->validated['field_id']
         ]);
         return $this->success(['message' => 'Success And Age Activity Closed']);
     }
