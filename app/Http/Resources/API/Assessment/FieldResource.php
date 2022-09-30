@@ -19,8 +19,7 @@ class FieldResource extends JsonResource
             'name'              =>  $this->name,
             'description'       =>  $this->description,
             'total_activities'  =>  $this->activities_count,
-            'user_answers'      =>  $this->user_answers_count,
-            // 'activities'        =>  ActivityResource::collection($this->activities)
+            'user_answers'      =>  $this->user_answers_count
         ];
     }
 }
