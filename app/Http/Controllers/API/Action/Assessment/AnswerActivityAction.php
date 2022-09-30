@@ -71,7 +71,7 @@ class AnswerActivityAction extends APIController
         $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)
                                             ->whereUserId(auth()->id())
                                             ->count();
-        dd('countOfActivities: '.$countOfActivities,'countOfAnswers: '.$countOfAnswers);
+
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
                 $this->user->updateCheckpoint(Checkpoints::result()->value);
