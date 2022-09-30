@@ -8,9 +8,9 @@ route_group(['namespace' => 'App\Http\Controllers\API\Action', 'prefix' => 'acti
         Route::post('login', 'LoginAction')->withoutMiddleware('auth:sanctum');
         Route::post('register', 'RegisterAction')->withoutMiddleware('auth:sanctum');
         Route::post('social', 'SocialAuthAction')->withoutMiddleware('auth:sanctum');
-        Route::put('update-profile', 'UpdateProfileAction');
-        Route::post('restore-account', 'RestoreAccountAction');
+        Route::post('restore-account', 'RestoreAccountAction')->withoutMiddleware('auth:sanctum');
         // ->middleware([AppAuthAlgorithm::class,'throttle:1,60']);
+        Route::put('update-profile', 'UpdateProfileAction');
     });
 
     route_group('assessment',function(){
