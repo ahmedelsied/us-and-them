@@ -82,6 +82,7 @@ class AnswerActivityAction extends APIController
             }
 
             $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
+            $this->user->refresh();
             return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
         }
 
