@@ -3,13 +3,15 @@
 namespace App\Console;
 
 use App\Support\Commands\Generators\GenerateCommand;
+use App\Support\Commands\LocalizeCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        GenerateCommand::class
+        GenerateCommand::class,
+        LocalizeCommand::class
     ];
 
     protected function schedule(Schedule $schedule)

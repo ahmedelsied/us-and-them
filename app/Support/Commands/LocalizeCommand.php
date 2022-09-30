@@ -62,7 +62,7 @@ class LocalizeCommand extends Command
             $AtDirective->each($handler);
         }
         $file = 'hsm_locale_'.time().'.json';
-        file_put_contents(resource_path('lang/'.$file), json_encode($newWords));
+        File::put(resource_path('lang/'.$file),json_encode($newWords));
         echo 'exporting language done successfully '.$file.PHP_EOL;
 
         return 0;
