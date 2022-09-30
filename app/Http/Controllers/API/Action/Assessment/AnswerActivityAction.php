@@ -63,7 +63,7 @@ class AnswerActivityAction extends APIController
         }
 
         $countOfActivities = Field::withCount('activities')
-                                  ->whereAgeActivityId($this->userAgeActivity)
+                                  ->whereAgeActivityId(($this->userAgeActivity + 1))
                                   ->get()
                                   ->pluck('activities_count')->all();
 
