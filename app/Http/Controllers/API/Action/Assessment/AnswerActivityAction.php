@@ -72,22 +72,19 @@ class AnswerActivityAction extends APIController
                                             ->whereUserId(auth()->id())
                                             ->count();
 
-        // if($countOfActivities == $countOfAnswers){
-        //     if($this->userAgeActivity == 5){
-        //         $this->user->updateCheckpoint(Checkpoints::result()->value);
-        //         return $this->success(['message' => 'Congratulations you\'ve passed all age activities!']);
-        //     }
-        //     if($this->user->information?->birthdate->age == (1 + $this->userAgeActivity)){
-        //         return $this->closeTestPhase();
-        //     }
+        if($countOfActivities == $countOfAnswers){
+            if($this->userAgeActivity == 5){
+                $this->user->updateCheckpoint(Checkpoints::result()->value);
+                return $this->success(['message' => 'Congratulations you\'ve passed all age activities!']);
+            }
+            if($this->user->information?->birthdate->age == (1 + $this->userAgeActivity)){
+                return $this->closeTestPhase();
+            }
 
-        //     $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
-        //     $this->user->refresh();
-            return $this->success([
-                'message'       => __('New Age Activity'),
-                'age_activity'  => new AgeActivityResource($this->user->getAgeActivity())
-            ]);
-        // }
+            $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
+            $this->user->refresh();
+            return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
+        }
 
         return $this->success(['message' => 'Request Executed Successfully']);
     }
