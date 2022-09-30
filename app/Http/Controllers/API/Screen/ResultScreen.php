@@ -12,10 +12,7 @@ class ResultScreen extends APIController
     {
         $user = auth()->user();
         if(!$this->checkpoint($user)){
-            return $this->error([
-                'message'       =>  __('Wrong checkpoint'),
-                'checkpoint'    =>  $user->checkpoint
-            ]);
+            return $this->error(__('Wrong checkpoint'),400,['checkpoint'    =>  $user->checkpoint]);
         }
         $this->updateCheckpoint($user);
         $age = $user->information?->birthdate?->age;
