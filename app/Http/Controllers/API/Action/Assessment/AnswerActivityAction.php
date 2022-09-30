@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Action\Assessment;
 
 use App\API\Http\Controllers\APIController;
-use App\Domain\Assessment\Models\Activity;
 use App\Domain\Assessment\Models\Field;
 use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
@@ -31,7 +30,7 @@ class AnswerActivityAction extends APIController
 
         $answer = UserActivityAnswer::create([
                                     'user_id'   =>  auth()->id(),
-                                    'age_activity_id'   =>  $this->userAgeActivity
+                                    'age_activity_id'   =>  ($this->userAgeActivity == 0 ? 1 : $this->userAgeActivity)
                                     ] + 
                                     $validated);
 
@@ -59,7 +58,7 @@ class AnswerActivityAction extends APIController
 
     private function handleResponse($answer)
     {
-        if($this->countOfLatestAnswers == 4 && $this->countOfLastPassedAnswers == 0 && !$answer->passed){
+        if($this->countOfLatestAnswers >= 4 && (($this->countOfLastPassedAnswers == 0 || $this->countOfLastPassedAnswers == 1) && !$answer->passed )){
             return $this->closeTestPhase();
         }
 
@@ -69,12 +68,14 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)->whereUserId(auth()->id())->count();
+        $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)
+                                            ->whereUserId(auth()->id())
+                                            ->count();
 
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
                 $this->user->updateCheckpoint(Checkpoints::result()->value);
-                return $this->success('Congratulations you\'ve passed all age activities!');
+                return $this->success(['message' => 'Congratulations you\'ve passed all age activities!']);
             }
             if($this->user->information?->birthdate->age == (1 + $this->userAgeActivity)){
                 return $this->closeTestPhase();
@@ -83,12 +84,17 @@ class AnswerActivityAction extends APIController
             $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
             return $this->success(new AgeActivityResource($this->user->getAgeActivity()));
         }
+
+        return $this->success(['message' => 'Request Executed Successfully']);
     }
 
     private function closeTestPhase()
     {
         $this->user->updateCheckpoint(Checkpoints::result()->value);
-        return $this->success('Success And Age Activity Closed');
+        $this->user->information?->update([
+            'treatment_age_activity' => $this->userAgeActivity
+        ]);
+        return $this->success(['message' => 'Success And Age Activity Closed']);
     }
 
     protected function rules()

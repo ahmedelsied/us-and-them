@@ -21,7 +21,7 @@ class ActivityLogAuthorize
     public function handle(Request $request, Closure $next)
     {
         if(!$this->allowedToAnswerActivity()){
-            return ApiResponse::error('Authorization Error Or Wrong Checkpoint',400,auth()->user()->information?->checkpoint);
+            return ApiResponse::error('Authorization Error Or Wrong Checkpoint',400,['checkpoint' => auth()->user()->information?->checkpoint]);
         }
         return $next($request);
     }

@@ -55,7 +55,7 @@ class User extends Authenticatable implements HasMedia
             $index = !is_null($currentAgeActivity) ? $currentAgeActivity :  $this->information?->mental_age;
             $index = $index == 0 ? $index : ($index -1);
             return AgeActivity::whereIndex($index)
-                              ->with(['fields' => fn($q) => $q->withCount(['activities','user_answers'])])
+                              ->with(['fields' => fn($q) => $q->withCount(['activities','user_answers' => fn($q) => $q->whereUserId(auth()->id())])])
                               ->first();
 
         }
