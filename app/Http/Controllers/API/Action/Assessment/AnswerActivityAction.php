@@ -72,7 +72,7 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = UserActivityAnswer::where('age_activity_id',1)
+        $countOfAnswers = UserActivityAnswer::where('age_activity_id',$this->userAgeActivity)
                                             ->where('user_id',auth()->id())
                                             ->count();
 
