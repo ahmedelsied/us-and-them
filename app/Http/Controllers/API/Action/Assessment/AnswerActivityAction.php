@@ -73,7 +73,7 @@ class AnswerActivityAction extends APIController
         $countOfActivities = array_sum($countOfActivities);
         $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)
                                             ->whereUserId(auth()->id())
-                                            ->get();
+                                            ->toSql();
         dd($countOfActivities,$countOfAnswers,$this->userAgeActivity,auth()->id());
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
