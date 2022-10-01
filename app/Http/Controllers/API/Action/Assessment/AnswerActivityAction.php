@@ -8,7 +8,6 @@ use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
 use App\Http\Resources\API\Assessment\AgeActivityResource;
 use App\Support\Dashboard\Crud\WithInvoke;
-use Illuminate\Support\Facades\DB;
 
 class AnswerActivityAction extends APIController
 {

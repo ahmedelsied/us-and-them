@@ -17,7 +17,9 @@ class AgeActivityResource extends JsonResource
         return    [
             'id'        =>  $this->id,
             'title'     =>  $this->title,
-            'fields'    =>  FieldResource::collection($this->fields)
+            'fields'    =>  $this->whenLoaded('fields',function(){
+                return FieldResource::collection($this->fields);
+            })
         ];
     }
 }
