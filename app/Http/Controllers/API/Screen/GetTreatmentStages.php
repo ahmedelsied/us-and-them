@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Screen;
 use App\API\Http\Controllers\APIController;
 use App\Domain\Assessment\Models\AgeActivity;
 use App\Domain\Core\Enums\Checkpoints;
-use App\Domain\Core\Enums\Phases;
 use App\Http\Resources\API\Assessment\AgeActivityResource;
 
 class GetTreatmentStages extends APIController

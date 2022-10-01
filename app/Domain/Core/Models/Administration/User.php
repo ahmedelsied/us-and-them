@@ -5,6 +5,7 @@ namespace App\Domain\Core\Models\Administration;
 use App\Domain\Assessment\Models\AgeActivity;
 use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
+use App\Domain\Core\Enums\Phases;
 use App\Support\Concerns\HasFactory;
 use App\Support\Traits\HasPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -61,6 +62,19 @@ class User extends Authenticatable implements HasMedia
         }
 
         return null;
+    }
+
+    public function getStageFields($ageActivityId)
+    {
+        $ceilFieldId = $this->information?->ceil_field_id;
+        return AgeActivity::with([
+                                    'fields' => fn($q) => $q->withCount([
+                                                                            'activities',
+                                                                            'user_answers' => fn($query) => $query->wherePhase(Phases::treatment()->value)
+                                                                                                                  ->whereUserId($this->id)
+                                                                          ])
+                                                            ->where('id','>=',$ceilFieldId)])
+                                                            ->find($ageActivityId);
     }
 
     public function answers_log()

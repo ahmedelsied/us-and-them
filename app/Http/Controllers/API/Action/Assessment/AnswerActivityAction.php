@@ -31,8 +31,7 @@ class AnswerActivityAction extends APIController
             return $this->error(__('You\'ve already answered this activity before'),400,$userAgeActivity);
         }
 
-        $answer = UserActivityAnswer::create([
-                                    'user_id'   =>  auth()->id(),
+        $answer = $this->user->answers_log()->create([
                                     'age_activity_id'   =>  ($this->userAgeActivity == 0 ? 1 : $this->userAgeActivity)
                                     ] + 
                                     $this->validated);

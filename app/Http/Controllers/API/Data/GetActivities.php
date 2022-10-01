@@ -17,12 +17,7 @@ class GetActivities extends APIController
         if($user->checkpoint == Checkpoints::test()->value){
 
             $activities = Activity::whereFieldId($field->id)
-                                  ->with(['user_answer' => function($q){
-                                    if(request()->has('phase')){
-                                        $q->wherePhase(request('phase'));
-                                    }
-                                    return $q->whereUserId(auth()->id());
-                                  }])
+                                  ->with(['user_answer' => fn($q) => $q->whereUserId(auth()->id()) ])
                                   ->orderBy('index','ASC')
                                   ->paginate();
 
