@@ -8,6 +8,7 @@ use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
 use App\Http\Resources\API\Assessment\AgeActivityResource;
 use App\Support\Dashboard\Crud\WithInvoke;
+use Illuminate\Support\Facades\DB;
 
 class AnswerActivityAction extends APIController
 {
@@ -71,9 +72,13 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = UserActivityAnswer::where('age_activity_id',($this->userAgeActivity+1))
-                                            ->where('user_id',auth()->id())
-                                            ->get();
+        $countOfAnswers = DB::table('user_activity_answers_log')->selectRow('*')
+                                                                ->where('age_activity_id',($this->userAgeActivity+1))
+                                                                ->where('user_id',auth()->id())
+                                                                ->count();
+        // $countOfAnswers = UserActivityAnswer::where('age_activity_id',($this->userAgeActivity+1))
+        //                                     ->where('user_id',auth()->id())
+        //                                     ->get();
         dd($countOfActivities,$countOfAnswers,$this->userAgeActivity,$this->userAgeActivity+1,auth()->id());
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
