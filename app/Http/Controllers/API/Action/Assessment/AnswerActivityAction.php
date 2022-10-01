@@ -72,13 +72,9 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = DB::table('user_activity_answers_log')->selectRaw('*')
-                                                                ->where('age_activity_id',($this->userAgeActivity+1))
-                                                                ->where('user_id',auth()->id())
-                                                                ->toSql();
-        // $countOfAnswers = UserActivityAnswer::where('age_activity_id',($this->userAgeActivity+1))
-        //                                     ->where('user_id',auth()->id())
-        //                                     ->get();
+        $countOfAnswers = UserActivityAnswer::where('user_id',auth()->id())
+                                            ->get();
+                                            // where('age_activity_id',$this->userAgeActivity)
         dd($countOfActivities,$countOfAnswers,$this->userAgeActivity,$this->userAgeActivity+1,auth()->id());
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
