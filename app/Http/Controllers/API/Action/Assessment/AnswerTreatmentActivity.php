@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Action\Assessment;
 
 use App\API\Http\Controllers\APIController;
+use App\Domain\Assessment\Models\AgeActivity;
 use App\Domain\Assessment\Models\Field;
 use App\Domain\Assessment\Models\UserActivityAnswer;
 use App\Domain\Core\Enums\Checkpoints;
@@ -31,7 +32,7 @@ class AnswerTreatmentActivity extends APIController
             return $this->error(__('You\'ve already answered this activity before'),400,new AgeActivityResource($this->user->getStageFields($this->ageActvityId)));
         }
 
-        if($this->lastActivity()){
+        if($this->lastActivityInTreatment()){
             $this->user->information?->update([
                 'checkpoint'    =>  Checkpoints::end()->value
             ]);
@@ -54,7 +55,7 @@ class AnswerTreatmentActivity extends APIController
                                  ->exists();
     }
 
-    private function lastActivity()
+    private function lastActivityInTreatment()
     {
         $ceilFieldId = $this->user->information?->ceil_field_id;
         $treatmentAgeActivity = $this->user->information?->treatment_age_activity;
@@ -81,10 +82,41 @@ class AnswerTreatmentActivity extends APIController
             'passed'            =>  true,
         ]);
 
+        if($this->lastActivityInThisStage()){
+            $treatmentAgeActivity = (1+$this->user->information?->treatment_age_activity);
+            $this->user->information?->update([
+                'treatment_age_activity'    =>  $treatmentAgeActivity
+            ]);
+            return $this->success(AgeActivityResource::collection($this->getStages()));
+        }
+
         return $this->success(['message' => __('Request Executed Successfully')]);
 
     }
 
+    private function lastActivityInThisStage()
+    {        
+        $ceilFieldId = $this->user->information?->ceil_field_id;
+        $treatmentAgeActivity = $this->user->information?->treatment_age_activity;
+
+        $activities = Field::where('id','>=',$ceilFieldId)
+                           ->where('age_activity_id',$treatmentAgeActivity)
+                           ->count();
+
+        $answers = UserActivityAnswer::wherePhase(Phases::treatment()->value)
+                                     ->where('field_id','>=',$ceilFieldId)
+                                     ->where('age_activity_id',$treatmentAgeActivity)
+                                     ->whereUserId(auth()->id())
+                                     ->count();
+
+        return ($activities-1) == $answers;
+    }
+
+    private function getStages()
+    {
+        return AgeActivity::where('id','>=',$this->user->information?->treatment_age_activity)
+                          ->get();
+    }
     protected function rules()
     {
         return [
