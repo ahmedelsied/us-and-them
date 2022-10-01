@@ -14,12 +14,13 @@ class AgeActivityResource extends JsonResource
      */
     public function toArray($request)
     {
-        return    [
+        return  [
             'id'        =>  $this->id,
             'title'     =>  $this->title,
             'fields'    =>  $this->whenLoaded('fields',function(){
                 return FieldResource::collection($this->fields);
-            })
+            }),
+            'status' => $this->id == auth()->user()->information?->treatment_age_activity
         ];
     }
 }
