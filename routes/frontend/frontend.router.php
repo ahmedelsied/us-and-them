@@ -10,4 +10,5 @@ Route::get('/', function () {
 
 Route::post('pull-from-github','PullFromGithubController')->withoutMiddleware([VerifyCsrfToken::class]);
 
-Route::get('terms-and-conditions','TermsAndConditionController');
+Route::get('terms-and-conditions','StaticPagesController@terms');
+Route::get('privacy-and-policies','StaticPagesController@privacy');
