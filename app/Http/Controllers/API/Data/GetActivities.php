@@ -10,14 +10,20 @@ use App\Http\Resources\API\Assessment\ActivityResource;
 
 class GetActivities extends APIController
 {
+    private $user;
     public function __invoke(Field $field)
     {
-        $user = auth()->user();
+        $this->user = auth()->user();
 
-        if($user->checkpoint == Checkpoints::test()->value){
+        if($this->allowedCheckpoint()){
 
             $activities = Activity::whereFieldId($field->id)
-                                  ->with(['user_answer' => fn($q) => $q->whereUserId(auth()->id()) ])
+                                  ->with(['user_answer' => function($q){
+                                    if(request()->has('phase')){
+                                        $q->wherePhase(request('phase'));
+                                    }
+                                    return $q->whereUserId(auth()->id());
+                                  }])
                                   ->orderBy('index','ASC')
                                   ->paginate();
 
@@ -25,6 +31,11 @@ class GetActivities extends APIController
         }
 
         return $this->error(__('Wrong Checkpoint'));
+    }
+
+    private function allowedCheckpoint()
+    {
+        return $this->user->checkpoint == Checkpoints::test()->value || $this->user->checkpoint == Checkpoints::treatment()->value;
     }
     
 }
