@@ -23,7 +23,7 @@ class AnswerActivityAction extends APIController
         $this->user = auth()->user(); 
         $this->userAgeActivity = $this->user->information?->current_age_activity;
         if($this->notAllowedToAnswerThisField()){
-            return $this->error(__('This age activity has been closed and we will show your result'));
+            return $this->error(['message' => __('This age activity has been closed and we will show your result')]);
         }
 
         if($this->alreadyAnsweredActivity($this->validated['activity_id'])){
@@ -71,7 +71,7 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)
+        $countOfAnswers = UserActivityAnswer::whereAgeActivityId(($this->userAgeActivity + 1))
                                             ->whereUserId(auth()->id())
                                             ->count();
 
