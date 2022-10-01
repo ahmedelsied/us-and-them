@@ -31,7 +31,7 @@ class AnswerTreatmentActivity extends APIController
         if($this->alreadyAnswered()){
             $stages = AgeActivity::where('id','>=',$this->user->information?->treatment_age_activity)
                           ->get();
-            return $this->error(__('You\'ve already answered this activity before'),400,AgeActivityResource::collection($stages));
+            return $this->error(__('You\'ve already answered this activity before'),400,['stages' => AgeActivityResource::collection($stages)]);
         }
 
         if($this->lastActivityInTreatment()){
@@ -89,7 +89,7 @@ class AnswerTreatmentActivity extends APIController
             $this->user->information?->update([
                 'treatment_age_activity'    =>  $treatmentAgeActivity
             ]);
-            return $this->success(AgeActivityResource::collection($this->getStages()));
+            return $this->success(['stages' => AgeActivityResource::collection($this->getStages())]);
         }
 
         return $this->success(['message' => __('Request Executed Successfully')]);
