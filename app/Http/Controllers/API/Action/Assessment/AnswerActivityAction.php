@@ -75,7 +75,7 @@ class AnswerActivityAction extends APIController
         $countOfAnswers = DB::table('user_activity_answers_log')->selectRaw('*')
                                                                 ->where('age_activity_id',($this->userAgeActivity+1))
                                                                 ->where('user_id',auth()->id())
-                                                                ->count();
+                                                                ->toSql();
         // $countOfAnswers = UserActivityAnswer::where('age_activity_id',($this->userAgeActivity+1))
         //                                     ->where('user_id',auth()->id())
         //                                     ->get();
