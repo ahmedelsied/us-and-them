@@ -44,7 +44,7 @@ class AnswerActivityAction extends APIController
     {
         $lastFiveAnswers = UserActivityAnswer::whereUserId(auth()->id())
                                              ->whereFieldId($this->validated['field_id'])
-                                             ->whereAgeActivityId($this->userAgeActivity)
+                                             ->whereAgeActivityId(($this->userAgeActivity + 1))
                                              ->limit(5)
                                              ->orderBy('id','DESC')
                                              ->get()
