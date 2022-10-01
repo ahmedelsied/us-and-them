@@ -29,7 +29,9 @@ class AnswerTreatmentActivity extends APIController
             return $this->error(__('Wrong Checkpoint'),400,['checkpoint' => $this->user->checkpoint]);
         }
         if($this->alreadyAnswered()){
-            return $this->error(__('You\'ve already answered this activity before'),400,new AgeActivityResource($this->user->getStageFields($this->ageActvityId)));
+            $stages = AgeActivity::where('id','>=',$this->user->information?->treatment_age_activity)
+                          ->get();
+            return $this->error(__('You\'ve already answered this activity before'),400,AgeActivityResource::collection($stages));
         }
 
         if($this->lastActivityInTreatment()){
