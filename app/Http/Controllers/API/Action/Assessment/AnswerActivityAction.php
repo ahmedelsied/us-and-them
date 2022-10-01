@@ -71,10 +71,10 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)
-                                            ->whereUserId(auth()->id())
-                                            ->toSql();
-        dd($countOfActivities,$countOfAnswers,$this->userAgeActivity,auth()->id());
+        $countOfAnswers = UserActivityAnswer::where('age_activity_id',($this->userAgeActivity+1))
+                                            ->where('user_id',auth()->id())
+                                            ->get();
+        dd($countOfActivities,$countOfAnswers,$this->userAgeActivity,$this->userAgeActivity+1,auth()->id());
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
                 $this->user->updateCheckpoint(Checkpoints::result()->value);
