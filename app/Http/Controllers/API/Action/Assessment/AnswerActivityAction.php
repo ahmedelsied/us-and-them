@@ -66,7 +66,7 @@ class AnswerActivityAction extends APIController
             return $this->closeTestPhase();
         }
 
-        $countOfActivities = Field::whereAgeActivityId(($this->userAgeActivity + 1))
+        $countOfActivities = Field::whereAgeActivityId(($this->userAgeActivity))
                                   ->withCount('activities')
                                   ->get()
                                   ->pluck('activities_count')->all();
