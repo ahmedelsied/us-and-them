@@ -25,7 +25,7 @@ class CompleteApplicationAction extends APIController
             $user->information()->create((
                             [
                                 'mental_age'            =>  $mentalAge,
-                                'current_age_activity'  =>  $mentalAge,
+                                'current_age_activity'  =>  $mentalAge == 0 ? ($mentalAge+1) : $mentalAge,
                                 'checkpoint'            =>  Checkpoints::test()->value,
                             ] + 
                             $validated ));
@@ -39,11 +39,11 @@ class CompleteApplicationAction extends APIController
         return $this->error(__('Wrong Checkpoint'));
     }
 
-    private function setMentalAge($age,$is_patient)
+    private function setMentalAge($age,$isPatient)
     {
         $mentalAge = 0;
         if($age > 1){
-            $mentalAge = $is_patient ? ($age-2) : ($age-1);
+            $mentalAge = $isPatient ? ($age-2) : ($age-1);
         }
 
         return $mentalAge;
