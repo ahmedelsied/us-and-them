@@ -12,7 +12,7 @@
             margin:50px
         }
         p{
-            width: 600px;
+            max-width: 600px;
             margin: 10px auto
         }
     </style>
