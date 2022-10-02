@@ -61,6 +61,7 @@ class AnswerActivityAction extends APIController
     private function handleResponse($answer)
     {
         if($this->countOfLatestAnswers >= 4 && (($this->countOfLastPassedAnswers == 0 || $this->countOfLastPassedAnswers == 1) && !$answer->passed )){
+            $this->user->updateCheckpoint(Checkpoints::result()->value);
             return $this->closeTestPhase();
         }
 
@@ -70,10 +71,9 @@ class AnswerActivityAction extends APIController
                                   ->pluck('activities_count')->all();
 
         $countOfActivities = array_sum($countOfActivities);
-        $countOfAnswers = UserActivityAnswer::where('age_activity_id',$this->userAgeActivity)
+        $countOfAnswers = UserActivityAnswer::whereAgeActivityId($this->userAgeActivity)
                                             ->where('user_id',auth()->id())
                                             ->count();
-
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
                 $this->user->updateCheckpoint(Checkpoints::result()->value);
@@ -93,7 +93,6 @@ class AnswerActivityAction extends APIController
 
     private function closeTestPhase()
     {
-        $this->user->updateCheckpoint(Checkpoints::result()->value);
         $this->user->information?->update([
             'treatment_age_activity'    => $this->userAgeActivity,
             'ceil_field_id'             => $this->validated['field_id']
