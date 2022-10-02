@@ -32,7 +32,7 @@ class AnswerActivityAction extends APIController
         }
 
         $answer = $this->user->answers_log()->create([
-                                    'age_activity_id'   =>  ($this->userAgeActivity == 0 ? 1 : $this->userAgeActivity)
+                                    'age_activity_id'   => $this->userAgeActivity
                                     ] + 
                                     $this->validated);
 
@@ -43,7 +43,7 @@ class AnswerActivityAction extends APIController
     {
         $lastFiveAnswers = UserActivityAnswer::whereUserId(auth()->id())
                                              ->whereFieldId($this->validated['field_id'])
-                                             ->whereAgeActivityId(($this->userAgeActivity + 1))
+                                             ->whereAgeActivityId($this->userAgeActivity)
                                              ->limit(5)
                                              ->orderBy('id','DESC')
                                              ->get()
@@ -61,7 +61,6 @@ class AnswerActivityAction extends APIController
     private function handleResponse($answer)
     {
         if($this->countOfLatestAnswers >= 4 && (($this->countOfLastPassedAnswers == 0 || $this->countOfLastPassedAnswers == 1) && !$answer->passed )){
-            $this->user->updateCheckpoint(Checkpoints::result()->value);
             return $this->closeTestPhase();
         }
 
@@ -76,11 +75,8 @@ class AnswerActivityAction extends APIController
                                             ->count();
         if($countOfActivities == $countOfAnswers){
             if($this->userAgeActivity == 5){
-                $this->user->updateCheckpoint(Checkpoints::result()->value);
+                $this->user->updateCheckpoint(Checkpoints::end()->value);
                 return $this->success(['message' => 'Congratulations you\'ve passed all age activities!']);
-            }
-            if($this->user->information?->birthdate->age == (1 + $this->userAgeActivity)){
-                return $this->closeTestPhase();
             }
 
             $this->user->information?->update(['current_age_activity' => (++$this->userAgeActivity)]);
@@ -93,6 +89,7 @@ class AnswerActivityAction extends APIController
 
     private function closeTestPhase()
     {
+        $this->user->updateCheckpoint(Checkpoints::result()->value);
         $this->user->information?->update([
             'treatment_age_activity'    => $this->userAgeActivity,
             'ceil_field_id'             => $this->validated['field_id']
