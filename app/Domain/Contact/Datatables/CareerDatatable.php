@@ -28,7 +28,7 @@ class CareerDatatable extends BaseDatatable
     {
         return [
             'resume'    =>  fn($model) => $model->getFirstMediaUrl(),
-            'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d H:ia')
+            'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d h:ia')
         ];
     }
 }

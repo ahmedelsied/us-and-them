@@ -30,7 +30,7 @@ class ContactMessageDatatable extends BaseDatatable
     protected function customColumns(): array
     {
         return [
-            'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d H:ia')
+            'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d h:ia')
         ];
     }
 }
