@@ -16,7 +16,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
             require __DIR__.'/core.routes.php';
             require __DIR__.'/assessment.routes.php';
-            require __DIR__.'/doctor.routes.php';
+            require __DIR__.'/contact.routes.php';
+            // require __DIR__.'/doctor.routes.php';
         });
 
     });
