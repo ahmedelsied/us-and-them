@@ -18,4 +18,9 @@ route_group(['namespace' => 'App\Http\Controllers\API\Action', 'prefix' => 'acti
         Route::post('answer-activity','AnswerActivityAction')->middleware(ActivityLogAuthorize::class);
         Route::post('treatment/answer-activity','AnswerTreatmentActivity');
     });
+
+    route_group('web',function(){
+        Route::post('contact-message','LandingPageActions@contact')->withoutMiddleware('auth:sanctum');
+        Route::post('career','LandingPageActions@career')->withoutMiddleware('auth:sanctum');
+    });
 });

@@ -8,7 +8,7 @@ return static function (SidebarGenerator $sidebar) {
         ->addModule('Contact', 10)
         ->addLink(
             name: __('Careers'),
-            url: route('dashboard.contact.career.index'),
+            url: route('dashboard.contact.careers.index'),
             icon: 'fa fa-suitcase',
             permission: ContactPermissions::career()->can('read')
         )

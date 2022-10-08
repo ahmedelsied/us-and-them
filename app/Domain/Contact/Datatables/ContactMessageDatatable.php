@@ -8,18 +8,29 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ContactMessageDatatable extends BaseDatatable
 {
+    protected ?string $actionable = 'delete';
+
     public function query(): Builder
     {
-        return ContactMessage::query();
+        return ContactMessage::latest();
     }
 
     protected function columns(): array
     {
         return [
+            $this->column('id',__('ID')),
             $this->column('name',__('Name')),
             $this->column('email',__('email')),
             $this->column('subject',__('Subject')),
             $this->column('message',__('Message')),
+            $this->column('created_at',__('Received At')),
+        ];
+    }
+    
+    protected function customColumns(): array
+    {
+        return [
+            'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d H:ia')
         ];
     }
 }

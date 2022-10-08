@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Assessment;
+namespace App\Http\Requests\Dashboard\Assessment;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class CareerDatatable extends BaseDatatable
 {
+    protected ?string $actionable = 'delete';
     public function query(): Builder
     {
-        return Career::with('media');
+        return Career::with('media')->latest();
     }
 
     protected function columns(): array
@@ -27,7 +28,7 @@ class CareerDatatable extends BaseDatatable
     {
         return [
             'resume'    =>  fn($model) => $model->getFirstMediaUrl(),
-            'created_at'    =>  fn($model) => $model->created_at->formt('Y-m-d H:ia')
+            'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d H:ia')
         ];
     }
 }

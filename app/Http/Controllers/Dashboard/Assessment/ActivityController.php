@@ -16,7 +16,7 @@ use App\Domain\Assessment\Models\Field;
 use Arr;
 use Batch;
 use Illuminate\Http\Request;
-use App\Http\Requests\Assessment\ActivityRequest;
+use App\Http\Requests\Assessment\Dashboard\ActivityRequest;
 class ActivityController extends DashboardController
 {
     use WithDatatable,  WithForm , WithStore ,WithUpdate , WithDestroy;
