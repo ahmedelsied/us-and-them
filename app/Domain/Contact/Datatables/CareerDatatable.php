@@ -5,6 +5,7 @@ namespace App\Domain\Contact\Datatables;
 use App\Domain\Contact\Models\Career;
 use App\Support\Dashboard\Datatables\BaseDatatable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class CareerDatatable extends BaseDatatable
 {
@@ -27,7 +28,7 @@ class CareerDatatable extends BaseDatatable
     protected function customColumns(): array
     {
         return [
-            'resume'    =>  fn($model) => '<a download href="'.$model->getFirstMedia()->getFullUrl().'"><i class="fa fa-download"></i></a>',
+            'resume'    =>  fn($model) => '<a download href="'.Str::replace($model->getFirstMediaUrl(),'http://','https://').'"><i class="fa fa-download"></i></a>',
             'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d h:ia')
         ];
     }
