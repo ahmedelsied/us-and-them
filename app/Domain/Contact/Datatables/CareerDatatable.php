@@ -27,7 +27,7 @@ class CareerDatatable extends BaseDatatable
     protected function customColumns(): array
     {
         return [
-            'resume'    =>  fn($model) => '<a download href="'.$model->getFirstMediaUrl().'"><i class="fa fa-download"></i></a>',
+            'resume'    =>  fn($model) => '<a download href="'.$model->getFirstMedia()->getFullUrl().'"><i class="fa fa-download"></i></a>',
             'created_at'    =>  fn($model) => $model->created_at->format('Y-m-d h:ia')
         ];
     }
