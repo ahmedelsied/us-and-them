@@ -6,7 +6,7 @@ class ChangeLocalizationAction
 {
     public function __invoke($locale)
     {
-        session()->put('dashboard-locale', $locale);
+        session()->put('locale', $locale);
 
         return redirect()->back();
     }

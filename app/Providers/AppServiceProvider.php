@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if(request()->hasHeader('Accept-Language')){
+        if(request()->header('Accept-Language') == 'ar' || request()->header('Accept-Language') == 'en'){
             app()->setLocale(request()->header('Accept-Language'));
         }
         Validator::includeUnvalidatedArrayKeys();
